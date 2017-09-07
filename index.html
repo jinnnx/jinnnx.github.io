@@ -3,11 +3,95 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/index.css">
+	<script src="Js/jquery-1.9.1.min.js"></script>
 	<title>你的名字</title>
 </head>
 <body>
 	<h1>你的名字</h1>
 	<h3>新海诚</h3>
-	<img src="img/57d228e7f2cb1.jpg">
+	<div class="banner_box">
+	  <div class="imgs">
+		<img src="img/57d228e7f2cb1.jpg">
+		<img src="img/57d228f24f2f9.jpg">
+		<img src="img/5832b7586088f.jpg">
+		<img src="img/5832b76582c9f.jpg">
+	  </div>
+	  <div class="points">
+	  	<span></span>
+	  	<span></span>
+	  	<span></span>
+	  	<span></span>
+	  </div>
+	  <span class="left_btn">&lt;</span>
+	  <span class="right_btn">&gt;</span>	
+	</div>
 </body>
+<script type="text/javascript">
+	$(function(){
+	var w = $("img").width();
+	console.log(w);
+	var i =1;
+	var count = $("img").length;
+
+	function points(n){
+		$(".points span").eq(n).addClass('current')
+		.siblings('span').removeClass('current');
+	}
+	points(0);
+
+	$(".right_btn").click(function(){
+		if(!$(".imgs").is(":animated")){
+			if(i==count){
+				$(".imgs").animate({"margin-left":0});
+				i=1;
+			}else{
+				$(".imgs").animate({"margin-left":"-="+w});
+				i++;
+			}
+		}
+		points(i-1);
+	})
+
+	$(".left_btn").click(function(){
+		if(!$(".imgs").is(":animated")){
+			if(i==1){
+				$(".imgs").animate({"margin-left":-(count-1)*w});
+				i=count;
+			}else{
+				$(".imgs").animate({"margin-left":"+="+w});
+				i--;
+			}
+		}
+		points(i-1);
+	})
+
+	$(".points span").click(function(){
+		if(!$(".imgs").is(":animated")){
+			var index = $(this).index();
+			console.log(index);
+		$(".imgs").animate({"margin-left":-index*w});
+				
+		}
+		points(index);
+	})
+
+	var t = setInterval("$('.right_btn').click()", 2000);
+
+	$(".banner_box").mouseover(function(event) {
+		/* Act on the event */
+		clearInterval(t);
+	}).mouseout(function(event) {
+		/* Act on the event */
+		t = setInterval("$('.right_btn').click()", 2000);
+	});
+
+
+
+
+
+})
+
+
+
+</script>
 </html>
